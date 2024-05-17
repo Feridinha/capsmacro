@@ -16,8 +16,9 @@ KEY_H = 35 # /
 KEY_ON_RIGHT_OF_L = 39
 KEY_PIPE = 86
 KEY_SLASH = 98 
-KEY_BACKSLASH = 43
+KEY_BACKSLASH = 86
 
+KEY_SHIFT = 42
 KEY_CAPSLOCK = 58
 
 KEY_UP = 103
@@ -56,7 +57,7 @@ while True:
             IS_CAPS_ON = False
         else:
             IS_CAPS_ON = True
-    elif key_id == IS_SHIFT_ON:
+    elif key_id == KEY_SHIFT:
         if state == "RELEASED":
             IS_SHIFT_ON = False
         else:
