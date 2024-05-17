@@ -12,13 +12,18 @@ KEY_I = 23  # Up arrow
 KEY_K = 37  # Down arrow
 KEY_J = 36  # Left arrow
 KEY_L = 38  # Right arrow
+KEY_H = 35 # /
+KEY_ON_RIGHT_OF_L = 39
+KEY_PIPE = 86
+KEY_SLASH = 98 
+KEY_BACKSLASH = 43
+
 KEY_CAPSLOCK = 58
 
 KEY_UP = 103
 KEY_LEFT = 105
 KEY_RIGHT = 106
 KEY_DOWN = 108
-
 
 # Event types
 EV_KEY = 1
@@ -34,6 +39,7 @@ def get_state_by_id(state_id: int) -> str:
         return "UNKNOWN"
 
 IS_CAPS_ON = False
+IS_SHIFT_ON = False
 
 while True:
     data = sys.stdin.buffer.read(INPUT_EVENT.size)
@@ -50,7 +56,12 @@ while True:
             IS_CAPS_ON = False
         else:
             IS_CAPS_ON = True
-
+    elif key_id == IS_SHIFT_ON:
+        if state == "RELEASED":
+            IS_SHIFT_ON = False
+        else:
+            IS_SHIFT_ON = True
+        
     # Preserve the original event type
     event_time = time.time()
     sec = int(event_time)
@@ -65,6 +76,15 @@ while True:
             key_id = KEY_LEFT
         elif key_id == KEY_L:
             key_id = KEY_RIGHT
+        elif key_id == KEY_H:
+            key_id = KEY_SLASH
+        elif IS_SHIFT_ON:
+            if key_id == KEY_ON_RIGHT_OF_L:
+                key_id = KEY_PIPE
+        
+    # elif IS_SHIFT_ON:
+    #     if key_id == KEY_ON_RIGHT_OF_L:
+    #          key_id = KEY_LEFT
 
     if key_id == KEY_CAPSLOCK and state == "PRESSED": 
         continue
